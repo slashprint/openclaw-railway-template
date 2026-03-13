@@ -27,6 +27,10 @@ RUN useradd -m -s /bin/bash openclaw \
   && mkdir -p /data && chown openclaw:openclaw /data \
   && mkdir -p /home/linuxbrew/.linuxbrew && chown -R openclaw:openclaw /home/linuxbrew
 
+ENV PLAYWRIGHT_BROWSERS_PATH=/home/openclaw/.cache/ms-playwright
+RUN npx playwright-core install --with-deps chromium \
+  && chown -R openclaw:openclaw /home/openclaw/.cache
+
 USER openclaw
 RUN NONINTERACTIVE=1 /bin/bash -c "$(curl -fsSL https://raw.githubusercontent.com/Homebrew/install/HEAD/install.sh)"
 
